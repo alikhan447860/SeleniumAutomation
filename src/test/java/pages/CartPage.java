@@ -1,35 +1,42 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import utils.CommonMethods;
 
-public class CartPage {
-    WebDriver driver;
+public class CartPage extends CommonMethods {
 
-    // Locators
-    By cartIcon = By.xpath("//a[contains(@href,'/viewcart')]");
-    By loginButton = By.xpath("//a[contains(@href,'account/login')]");
+    private static final Logger logger = LoggerFactory.getLogger(CartPage.class);
+
+    // Locators with @FindBy
+    @FindBy(xpath = "//a[contains(@href,'/viewcart')]")
+    WebElement cartIcon;
+
+    @FindBy(xpath = "//a[contains(@href,'account/login')]")
+    WebElement loginButton;
 
     // Constructor
-    public CartPage(WebDriver driver) {
-        this.driver = driver;
+    public CartPage() {
+        PageFactory.initElements(driver, this);
     }
 
     // Open cart
     public void openCart() {
-        driver.findElement(cartIcon).click();
-        System.out.println("Cart opened");
+        cartIcon.click();
+        logger.info("Cart opened");
     }
 
     // Get login button text
     public String getLoginButtonText() {
-        return driver.findElement(loginButton).getText().trim();
+        return loginButton.getText().trim();
     }
 
     // Click login
     public void clickLogin() {
-        driver.findElement(loginButton).click();
-        System.out.println("Login clicked");
+        loginButton.click();
+        logger.info("Login clicked");
     }
 }

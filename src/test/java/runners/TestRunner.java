@@ -8,7 +8,14 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/resources/features",
         glue = {"stepdefinitions"},
-        plugin = {"pretty","html:target/cucumber-reports.html"}
+        plugin = {
+                "pretty",
+                "json:target/cucumber.json",
+                "html:target/cucumber-reports",
+                "junit:target/cucumber-junit.xml"
+        },
+        monochrome = true,
+        publish = false // Optional: set to true if you want to publish to Cucumber Reports online
 )
 public class TestRunner {
 }

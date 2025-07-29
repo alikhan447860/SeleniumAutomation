@@ -1,36 +1,42 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import utils.CommonMethods;
 
-public class HomePage {
-    WebDriver driver;
+public class HomePage extends CommonMethods {
 
-    // Locators
-    By closePopup = By.xpath("//button[contains(text(),'✕')]");
-    By searchBox = By.name("q");
+    private static final Logger logger = LoggerFactory.getLogger(HomePage.class);
+
+    // Locators with @FindBy
+    @FindBy(xpath = "//button[contains(text(),'✕')]")
+    WebElement closePopup;
+
+    @FindBy(name = "q")
+    WebElement searchBox;
 
     // Constructor
-    public HomePage(WebDriver driver) {
-        this.driver = driver;
+    public HomePage() {
+        PageFactory.initElements(driver, this);
     }
 
     // Close popup if exists
     public void closeLoginPopup() {
         try {
-            WebElement popup = driver.findElement(closePopup);
-            popup.click();
-            System.out.println("Popup closed");
+            closePopup.click();
+            logger.info("Popup closed");
         } catch (Exception e) {
-            System.out.println("No popup found");
+            logger.info("No popup found");
         }
     }
 
     // Search product
     public void searchProduct(String product) {
-        driver.findElement(searchBox).sendKeys(product, Keys.ENTER);
-        System.out.println("Searched for: " + product);
+        searchBox.sendKeys(product, Keys.ENTER);
+        logger.info("Searched for product: {}", product);
     }
 }

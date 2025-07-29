@@ -26,7 +26,7 @@ public class CartPage extends CommonMethods {
     // Open cart
     public void openCart() {
         cartIcon.click();
-        logger.info("Cart opened");
+        logger.info("Cart open ");
     }
 
     // Get login button text

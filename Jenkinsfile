@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    parameters {
+        choice(name: 'profile', choices: ['smoke', 'regression', 'sanity'], description: 'Select Test Suite to Run')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -10,12 +14,12 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-               bat "mvn clean test -Dsurefire.failIfNoSpecifiedTests=false"
+               bat "mvn clean test -P${params.profile} -Dsurefire.failIfNoSpecifiedTests=false"
             }
         }
     }
 
-   post {
+    post {
        always {
            script {
                allure([
@@ -24,5 +28,5 @@ pipeline {
                ])
            }
        }
-   }
+    }
 }

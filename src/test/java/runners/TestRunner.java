@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
         },
         monochrome = true,
         publish = false // Optional: set to true if you want to publish to Cucumber Reports online
+        // tags will be passed via system property from Maven profiles
 )
 public class TestRunner {
 }

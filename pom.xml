@@ -11,6 +11,8 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Default tags - runs all tests -->
+        <cucumber.filter.tags></cucumber.filter.tags>
     </properties>
 
     <dependencies>
@@ -69,6 +71,36 @@
 
     </dependencies>
 
+    <profiles>
+        <profile>
+            <id>smoke</id>
+            <properties>
+                <cucumber.filter.tags>@smoke</cucumber.filter.tags>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>regression</id>
+            <properties>
+                <cucumber.filter.tags>@regression</cucumber.filter.tags>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>sanity</id>
+            <properties>
+                <cucumber.filter.tags>@sanity</cucumber.filter.tags>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>critical</id>
+            <properties>
+                <cucumber.filter.tags>@critical</cucumber.filter.tags>
+            </properties>
+        </profile>
+    </profiles>
+
     <build>
         <plugins>
             <!-- Java Compiler -->
@@ -91,11 +123,10 @@
                         <include>**/TestRunner.java</include>
                     </includes>
                     <systemPropertyVariables>
-                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                        <cucumber.filter.tags>${cucumber.filter.tags}</cucumber.filter.tags>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
-
 
             <!-- Cucumber Report -->
             <plugin>

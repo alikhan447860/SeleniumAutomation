@@ -7,12 +7,10 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/resources/features",
-        glue = {"stepdefinitions"},
+        glue = "stepdefinitions",
         plugin = {
                 "pretty",
-                "json:target/cucumber.json",
-                "html:target/cucumber-reports",
-                "junit:target/cucumber-junit.xml"
+                "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"  // Allure ke liye plugin
         },
         monochrome = true,
         publish = false // Optional: set to true if you want to publish to Cucumber Reports online

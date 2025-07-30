@@ -4,7 +4,7 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "From suits Harvey Specter" );
-        System.out.println("From suits Mike Ross");
+        System.out.println( "From Suits Harvey Specter" );
+        System.out.println("From Suits Mike Ross");
     }
 }

@@ -10,7 +10,7 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                bat "mvn clean test"
+               bat "mvn clean test -Dsurefire.failIfNoSpecifiedTests=false"
             }
         }
     }

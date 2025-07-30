@@ -15,15 +15,14 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            script {
-                allure([
-                    includeProperties: false,
-                    jdk: '',
-                    results: [[path: 'target/allure-results']]
-                ])
-            }
-        }
-    }
+   post {
+       always {
+           script {
+               allure([
+                   results: [[path: 'target/allure-results']],
+                   commandline: 'allure'
+               ])
+           }
+       }
+   }
 }

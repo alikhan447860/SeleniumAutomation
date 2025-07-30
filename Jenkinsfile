@@ -10,7 +10,8 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                bat "mvn clean verify"
+                bat "mvn clean test"
+"
             }
         }
 

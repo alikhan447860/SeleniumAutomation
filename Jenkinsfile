@@ -14,20 +14,22 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                bat "mvn clean test -P${params.profile} -Dsurefire.failIfNoSpecifiedTests=false"
+                // Even if tests fail, mark as UNSTABLE instead of aborting pipeline
+                catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+                    bat "mvn clean test -P${params.profile} -Dsurefire.failIfNoSpecifiedTests=false"
+                }
             }
         }
 
         stage('Generate Allure Report') {
             steps {
-                // Generate Allure report from results
+                // Always run report generation
                 bat 'allure generate target/allure-results -o allure-report --clean'
             }
         }
 
         stage('Zip Allure Report') {
             steps {
-                // Zip the Allure report
                 bat 'powershell Compress-Archive -Path "allure-report\\*" -DestinationPath "allure-report.zip" -Force'
             }
         }
@@ -35,11 +37,10 @@ pipeline {
 
     post {
         always {
-            // Email with ZIP attachment
             emailext(
-                subject: "$PROJECT_NAME - Build # $BUILD_NUMBER - Allure Report",
+                subject: "${env.JOB_NAME} - Build # ${env.BUILD_NUMBER} - Allure Report",
                 body: """Hello,<br><br>
-                         Please find attached the Allure Test Report for build # $BUILD_NUMBER.<br><br>
+                         Please find attached the Allure Test Report for build # ${env.BUILD_NUMBER}.<br><br>
                          Regards,<br>
                          Jenkins""",
                 mimeType: 'text/html',

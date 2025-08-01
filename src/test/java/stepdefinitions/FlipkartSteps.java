@@ -55,6 +55,19 @@ public class FlipkartSteps {
         }
     }
 
+    // New Step Added
+    @And("user navigates to mobiles under Electronics")
+    public void user_navigates_to_mobiles_under_electronics() {
+        try {
+            home.navigateToMobiles();
+            logger.info("Navigated to Mobiles successfully");
+        } catch (Exception e) {
+            logger.error("Failed to navigate to Mobiles: {}", e.getMessage());
+            throw new RuntimeException("Navigation to Mobiles failed: " + e.getMessage());
+        }
+    }
+
+
     @Then("user goes to cart and clicks login button")
     public void user_goes_to_cart_and_clicks_login_button() {
         try {
@@ -82,7 +95,6 @@ public class FlipkartSteps {
 
         } catch (Exception e) {
             logger.error("Failed at cart/login step: {}", e.getMessage());
-            // Print full stack trace for debugging
             e.printStackTrace();
             AssertionUtil.fail("Assertion failed");
         }
